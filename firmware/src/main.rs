@@ -19,6 +19,7 @@ mod app {
     use dwt_systick_monotonic::DwtSystick;
     use embedded_hal::digital::v2::*;
     use postcard;
+    use rtic_monotonic::Milliseconds;
     use shared::{message, message::PerfData};
     use ssd1306::prelude::*;
     use stm32f1xx_hal::{gpio::*, i2c, pac, prelude::*, rcc::Clocks, timer, usb};
@@ -292,6 +293,10 @@ mod app {
                 }
                 (Some(prev), Some(new)) => {
                     // Display average of new and previous perf packets.
+
+                    // Schedule display of unaltered data.
+                    show_perf::spawn_after(Milliseconds(500_u32), None).unwrap();
+
                     *prev_perf = Some(new);
                     Some(PerfData {
                         all_cores_load: (prev.all_cores_load + new.all_cores_load) / 2.0,

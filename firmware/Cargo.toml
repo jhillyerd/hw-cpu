@@ -17,6 +17,7 @@ mutex-trait = "0.2"
 panic-probe = { version = "0.2.0", features = ["print-defmt"] }
 postcard = "0.6.1"
 rtic-core = "0.3"
+rtic-monotonic = "0.1.0-alpha.0"
 shared = { path = "../shared" }
 ssd1306 = "0.5.1"
 stm32-usbd = "0.6.0"
